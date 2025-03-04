@@ -1,16 +1,23 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../config/database';
 
-interface InventoryAttributes {
+export interface InventoryAttributes {
   id?: string;
   itemName: string;
   quantity: number;
   expiry: number;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export class Inventory extends Model<InventoryAttributes> {}
+export class Inventory extends Model<InventoryAttributes> {
+  public id!: string;
+  public itemName!: string;
+  public quantity!: number;
+  public expiry!: number;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
 
 Inventory.init(
   {
