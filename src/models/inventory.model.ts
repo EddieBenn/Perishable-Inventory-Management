@@ -2,7 +2,7 @@ import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../config/database';
 
 interface InventoryAttributes {
-  id?: number;
+  id?: string;
   itemName: string;
   quantity: number;
   expiry: number;
