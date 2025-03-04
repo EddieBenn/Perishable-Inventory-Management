@@ -1,15 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import createHttpError, { HttpError } from 'http-errors';
 import { ZodError } from 'zod';
-import winston from 'winston';
+import createHttpError from 'http-errors';
+import winstonLogger from './logger.middleware';
 
-export function globalExceptionHandler(
-  error: Error | HttpError | ZodError,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-
+export function globalExceptionHandler(error: Error | ZodError, req: Request, res: Response, next: NextFunction) {
   let statusCode = 500;
   let message = 'Internal Server Error';
   let errors = undefined;
@@ -28,7 +22,7 @@ export function globalExceptionHandler(
     message = error.message || 'Something went wrong';
   }
 
-  winston.error(`[ERROR] ${req.method} ${req.url}: ${error.message}`, {
+  winstonLogger.error(`[ERROR] ${req.method} ${req.url}: ${error.message}`, {
     method: req.method,
     url: req.url,
     statusCode: statusCode,
@@ -45,5 +39,3 @@ export function globalExceptionHandler(
     errors: errors,
   });
 }
-
-export { createHttpError };

@@ -6,4 +6,7 @@ export const InventorySchema = z.object({
   expiry: z.number().min(1, 'Expiry is required'),
 });
 
+export const SellSchema = InventorySchema.omit({ expiry: true });
+
 export type InventoryDTO = z.infer<typeof InventorySchema>;
+export type SellDTO = z.infer<typeof SellSchema>;
