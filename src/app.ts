@@ -8,6 +8,7 @@ import { createServer } from 'http';
 import { globalExceptionHandler } from './middlewares/error.middleware';
 import winstonLogger, { loggerMiddleware } from './middlewares/logger.middleware';
 import { testConnection } from './config/database';
+import { inventoryRouter } from './routes/inventory.routes';
 
 const app = express();
 const server = createServer(app);
@@ -15,12 +16,14 @@ const server = createServer(app);
 dotenv.config();
 
 app.use(helmet());
-app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(loggerMiddleware);
+
+app.use('/', inventoryRouter);
 app.use(globalExceptionHandler);
 
 testConnection();
