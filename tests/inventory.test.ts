@@ -111,7 +111,6 @@ describe('InventoryService', () => {
         { ...mockCreatedInventory, quantity: 5, save: jest.fn() },
       ];
       jest.spyOn(Inventory, 'findAll').mockResolvedValue(mockLots as any);
-
       await inventoryService.sellItem(itemData.itemName, 5);
 
       expect(mockLots[0].save).toHaveBeenCalled();
@@ -119,7 +118,6 @@ describe('InventoryService', () => {
 
       expect(mockLots[1].save).not.toHaveBeenCalled();
       expect(mockLots[1].quantity).toBe(5);
-
       expect(mockTransaction.commit).toHaveBeenCalled();
     });
 
