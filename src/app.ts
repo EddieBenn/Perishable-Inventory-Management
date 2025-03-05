@@ -9,11 +9,13 @@ import { globalExceptionHandler } from './middlewares/error.middleware';
 import winstonLogger, { loggerMiddleware } from './middlewares/logger.middleware';
 import { testConnection } from './config/database';
 import { inventoryRouter } from './routes/inventory.routes';
+import scheduleCronJobs from './utils/cron';
+
+dotenv.config();
 
 const app = express();
 const server = createServer(app);
 
-dotenv.config();
 
 app.use(helmet());
 app.use(cors());
@@ -22,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(loggerMiddleware);
+
+scheduleCronJobs();
 
 app.use('/', inventoryRouter);
 app.use(globalExceptionHandler);
