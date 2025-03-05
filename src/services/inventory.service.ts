@@ -4,10 +4,11 @@ import { sequelize } from '../config/database';
 import createHttpError from 'http-errors';
 
 const addInventory = async (itemName: string, quantity: number, expiry: number): Promise<void> => {
+  const absoluteExpiry = Date.now() + expiry;
   await Inventory.create({
     itemName,
     quantity,
-    expiry,
+    expiry: absoluteExpiry,
   });
 };
 
@@ -81,15 +82,12 @@ const sellItem = async (itemName: string, quantityToSell: number): Promise<void>
 const removeExpiredInventory = async (): Promise<number> => {
   const currentTime = Date.now();
 
-  const [affectedCount] = await Inventory.update(
-    { quantity: 0 },
-    {
-      where: {
-        expiry: { [Op.lte]: currentTime },
-        quantity: { [Op.gt]: 0 },
-      },
+  const affectedCount = await Inventory.destroy({
+    where: {
+      expiry: { [Op.lte]: currentTime },
+      quantity: { [Op.gt]: 0 },
     },
-  );
+  });
 
   return affectedCount;
 };
