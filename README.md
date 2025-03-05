@@ -1,6 +1,6 @@
 # Perishable Inventory Management System
 
-[Project-Url](https://edidiong-ndaobong-lendsqr-be-test.onrender.com)
+[Project-Url](https://perishable-inventory-management.onrender.com)
 
 ## Project Overview
 The Perishable Inventory Management System is a stateless Node.js server built with TypeScript and Express, backed by a relational database. It efficiently tracks and manages perishable inventory by allowing users to add items with expiration timestamps, sell available inventory, and fetch non-expired quantities. The system optimizes inventory updates to prevent overselling and ensures expired records are periodically removed for database efficiency.
