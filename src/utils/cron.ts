@@ -2,6 +2,7 @@ import cron from 'node-cron';
 import inventoryService from '../services/inventory.service';
 import winstonLogger from '../middlewares/logger.middleware';
 
+
 const scheduleCronJobs = () => {
   cron.schedule('0 8,16,0 * * *', async () => {
     try {

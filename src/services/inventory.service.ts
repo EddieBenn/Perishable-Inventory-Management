@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Op, Transaction } from 'sequelize';
 import { Inventory } from '../models/inventory.model';
 import { sequelize } from '../config/database';
@@ -6,6 +7,7 @@ import createHttpError from 'http-errors';
 const addInventory = async (itemName: string, quantity: number, expiry: number): Promise<void> => {
   const absoluteExpiry = Date.now() + expiry;
   await Inventory.create({
+    id: uuidv4(),
     itemName,
     quantity,
     expiry: absoluteExpiry,
@@ -85,7 +87,7 @@ const removeExpiredInventory = async (): Promise<number> => {
   const affectedCount = await Inventory.destroy({
     where: {
       expiry: { [Op.lte]: currentTime },
-      quantity: { [Op.gt]: 0 },
+      quantity: { [Op.gte]: 0 },
     },
   });
 
