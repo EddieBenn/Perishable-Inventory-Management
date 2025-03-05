@@ -34,7 +34,7 @@ git clone https://github.com/EddieBenn/Perishable-Inventory-Managemen.git
 #### Navigate into the project directory:
 
 ```
-cd Perishable-Inventory-Managemen
+cd Perishable-Inventory-Management
 ```
 
 #### Install dependencies:
