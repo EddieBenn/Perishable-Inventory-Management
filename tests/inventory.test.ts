@@ -38,6 +38,7 @@ describe('InventoryService', () => {
       await inventoryService.addInventory(itemData.itemName, itemData.quantity, itemData.expiry);
 
       expect(Inventory.create).toHaveBeenCalledWith({
+        id: expect.any(String),
         itemName: itemData.itemName,
         quantity: itemData.quantity,
         expiry: mockCurrentTime + itemData.expiry,
@@ -141,7 +142,7 @@ describe('InventoryService', () => {
       expect(Inventory.destroy).toHaveBeenCalledWith({
         where: {
           expiry: { [Op.lte]: mockCurrentTime },
-          quantity: { [Op.gt]: 0 },
+          quantity: { [Op.gte]: 0 },
         },
       });
     });
