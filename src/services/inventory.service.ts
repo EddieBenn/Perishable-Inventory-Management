@@ -5,12 +5,11 @@ import { sequelize } from '../config/database';
 import createHttpError from 'http-errors';
 
 const addInventory = async (itemName: string, quantity: number, expiry: number): Promise<void> => {
-  const absoluteExpiry = Date.now() + expiry;
   await Inventory.create({
     id: uuidv4(),
     itemName,
     quantity,
-    expiry: absoluteExpiry,
+    expiry,
   });
 };
 

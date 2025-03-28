@@ -35,7 +35,7 @@ Inventory.init(
       allowNull: false,
     },
     expiry: {
-      type: DataTypes.DATE,
+      type: DataTypes.BIGINT,
       allowNull: false,
     },
   },

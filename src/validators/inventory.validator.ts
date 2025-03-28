@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
 export const InventorySchema = z.object({
-  itemName: z.string().min(2, 'Item Name is required'),
-  quantity: z.number().min(1, 'Quantity is required'),
-  expiry: z.number().min(1, 'Expiry is required'),
+  itemName: z.string().min(2, 'Item Name is required and must be a string of at least 2 characters'),
+  quantity: z.number().min(1, 'Quantity is required and must be a positive number'),
+  expiry: z.number().min(1, 'Expiry is required and must be a positive number'),
 });
 
 export const SellSchema = InventorySchema.omit({ expiry: true });
