@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
-import createHttpError from 'http-errors';
+import createHttpError, { HttpError } from 'http-errors';
 import winstonLogger from './logger.middleware';
 
 export function globalExceptionHandler(error: Error | ZodError, req: Request, res: Response, next: NextFunction) {
@@ -38,4 +38,15 @@ export function globalExceptionHandler(error: Error | ZodError, req: Request, re
     timestamp: new Date().toISOString(),
     errors: errors,
   });
+}
+
+export function getErrorMessage(error: Error | ZodError | HttpError): { error: string } {
+  if (error instanceof ZodError) {
+    return { error: error.errors[0].message };
+  } else if (createHttpError.isHttpError(error)) {
+    return { error: error.message };
+  } else if (error instanceof Error) {
+    return { error: error.message };
+  }
+  return { error: 'An unexpected error occurred' };
 }
